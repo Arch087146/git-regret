@@ -10,10 +10,22 @@ later is a conviction.
 ## Usage
 
 ```bash
-node index.js            # human-readable shame
-node index.js --json     # machine-readable shame (CI-friendly)
-node index.js --author "me@work.com"
-node index.js --since "1 year ago"
+# from source (requires Go 1.22+)
+go install github.com/Arch087146/git-regret@latest
+
+# or grab a prebuilt binary from GitHub Releases
+# or build locally
+git clone https://github.com/Arch087146/git-regret && cd git-regret
+go build -o git-regret .
+```
+
+```bash
+git-regret                    # interactive TUI
+git-regret .                  # judge the current repo
+git-regret . --json           # machine-readable shame (CI-friendly)
+git-regret . --author "me@work.com"
+git-regret . --since "1 year ago"
+git-regret . --md REGRET.md   # write a shareable markdown report
 ```
 
 ## The Regret Index

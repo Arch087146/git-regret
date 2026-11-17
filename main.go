@@ -15,7 +15,33 @@ import (
 
 const version = "1.0.0"
 
+// valueFlags take an argument; everything else is boolean or positional.
+var valueFlags = map[string]bool{"--author": true, "--since": true, "--md": true, "--model": true, "--dir": true}
+
+// positional holds non-flag arguments extracted before flag.Parse, because
+// Go's flag package stops at the first positional argument.
+var positional []string
+
+func extractPositionals() {
+	args := os.Args[1:]
+	var rest []string
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		if strings.HasPrefix(a, "-") && a != "-" {
+			rest = append(rest, a)
+			if valueFlags[a] && i+1 < len(args) && !strings.HasPrefix(args[i+1], "-") {
+				rest = append(rest, args[i+1])
+				i++
+			}
+			continue
+		}
+		positional = append(positional, a)
+	}
+	os.Args = append([]string{os.Args[0]}, rest...)
+}
+
 func main() {
+	extractPositionals()
 	author := flag.String("author", "", "only judge one sinner")
 	since := flag.String("since", "", "only recent sins, e.g. \"1 year ago\"")
 	jsonOut := flag.Bool("json", false, "machine-readable shame")
@@ -24,8 +50,8 @@ func main() {
 	flag.Parse()
 
 	root, _ := os.Getwd()
-	if flag.NArg() > 0 {
-		root = flag.Arg(0)
+	if len(positional) > 0 {
+		root = positional[0]
 	}
 	root, _ = filepath.Abs(root)
 
@@ -36,7 +62,7 @@ func main() {
 	}
 
 	// interactive: no flags, real terminal
-	if !*jsonOut && *md == "" && *author == "" && *since == "" && flag.NArg() == 0 && isTTY() {
+	if !*jsonOut && *md == "" && *author == "" && *since == "" && len(positional) == 0 && isTTY() {
 		ui.Run(root)
 		return
 	}
