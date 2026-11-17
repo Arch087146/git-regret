@@ -34,4 +34,9 @@ be farmed by reverting twice.
 Grades: **S** (robot, suspicious) → **A** → **B** → **C** (serial quick-fixer)
 → **D** (chaos agent) → **F** (hold my beer).
 
+## Pairs well with
+
+- [`repo-roast`](https://github.com/Arch087146/repo-roast) — roasts the rest of your repo
+- [`repo-sanitizer`](https://github.com/Arch087146/repo-sanitizer) — finds the secrets you're about to leak
+
 MIT
