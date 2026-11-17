@@ -1,0 +1,13 @@
+{
+  "name": "git-regret",
+  "version": "0.1.0",
+  "description": "Analyzes your git history, links 'temporary hack' commits to the bugfixes that later undid them, and scores your regret rate.",
+  "bin": {
+    "git-regret": "./index.js"
+  },
+  "keywords": ["git", "technical-debt", "fun", "cli", "analytics"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  }
+}
